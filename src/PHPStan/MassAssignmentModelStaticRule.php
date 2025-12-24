@@ -7,6 +7,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 
 class MassAssignmentModelStaticRule implements Rule
 {
@@ -23,7 +24,7 @@ class MassAssignmentModelStaticRule implements Rule
     /**
      * @param Node $node
      * @param Scope $scope
-     * @return string[]
+     * @return array<\PHPStan\Rules\RuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -51,11 +52,11 @@ class MassAssignmentModelStaticRule implements Rule
 
         if (isset($node->args[0]) && $this->retrievesRequestInput($node->args[0], $scope)) {
             return [
-                sprintf(
+                RuleErrorBuilder::message(sprintf(
                     "Static call to %s method on a Model class with request data may result in a "
                     ."mass assignment vulnerability.",
                     $methodName
-                ),
+                ))->build(),
             ];
         }
 

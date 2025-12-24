@@ -8,6 +8,7 @@ use PhpParser\Node\PropertyItem;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 
 class FillableForeignKeyModelRule implements Rule
 {
@@ -24,7 +25,7 @@ class FillableForeignKeyModelRule implements Rule
     /**
      * @param Node $node
      * @param Scope $scope
-     * @return string[]
+     * @return array<\PHPStan\Rules\RuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -51,10 +52,10 @@ class FillableForeignKeyModelRule implements Rule
             if ($item->value instanceof Node\Scalar\String_
                 && Str::contains($key = $item->value->value, '_id', true)) {
                 return [
-                    sprintf(
+                    RuleErrorBuilder::message(sprintf(
                         'Potential foreign key %s declared as fillable and available for mass assignment.',
                         $key
-                    ),
+                    ))->build(),
                 ];
             }
         }
