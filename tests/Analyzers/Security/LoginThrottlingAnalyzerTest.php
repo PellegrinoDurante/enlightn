@@ -21,9 +21,9 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithMiddleware;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $router = $app->make(Router::class);
         $kernel = $app->make(Kernel::class);

@@ -12,9 +12,9 @@ class EnvFileAnalyzerTest extends AnalyzerTestCase
 {
     protected $files;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(EnvFileAnalyzer::class, $app);
 

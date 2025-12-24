@@ -10,9 +10,9 @@ use PHPUnit\Framework\Attributes\Test;
 
 class InvalidFunctionCallAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(InvalidFunctionCallAnalyzer::class, $app);
     }

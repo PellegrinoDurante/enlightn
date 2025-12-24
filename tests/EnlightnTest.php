@@ -15,9 +15,9 @@ use PHPUnit\Framework\Attributes\Test;
 
 class EnlightnTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $app->config->set('enlightn.analyzers', AppDebugAnalyzer::class);
     }

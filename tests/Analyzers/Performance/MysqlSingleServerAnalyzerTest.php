@@ -8,9 +8,9 @@ use PHPUnit\Framework\Attributes\Test;
 
 class MysqlSingleServerAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $app->config->set('app.env', 'production');
         $app->config->set('database.default', 'mysql');

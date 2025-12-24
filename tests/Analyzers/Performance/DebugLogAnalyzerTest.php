@@ -8,9 +8,9 @@ use PHPUnit\Framework\Attributes\Test;
 
 class DebugLogAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(DebugLogAnalyzer::class, $app);
     }

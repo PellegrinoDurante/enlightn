@@ -16,9 +16,9 @@ class UnusedGlobleMiddlewareAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithMiddleware;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(UnusedGlobalMiddlewareAnalyzer::class, $app);
     }

@@ -8,9 +8,9 @@ use PHPUnit\Framework\Attributes\Test;
 
 class RouteCachingAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(RouteCachingAnalyzer::class, $app);
     }
@@ -20,13 +20,12 @@ class RouteCachingAnalyzerTest extends AnalyzerTestCase
     {
         $this->app->config->set('app.env', 'local');
         
-        touch($this->app->getCachedRoutesPath());
+        // Set the routes.cached binding to simulate cached routes
+        $this->app->instance('routes.cached', true);
 
         $this->runEnlightn();
 
         $this->assertFailed(RouteCachingAnalyzer::class);
-        
-        unlink($this->app->getCachedRoutesPath());
     }
 
     #[Test]
@@ -44,13 +43,12 @@ class RouteCachingAnalyzerTest extends AnalyzerTestCase
     {
         $this->app->config->set('app.env', 'production');
         
-        touch($this->app->getCachedRoutesPath());
+        // Set the routes.cached binding to simulate cached routes
+        $this->app->instance('routes.cached', true);
 
         $this->runEnlightn();
 
         $this->assertPassed(RouteCachingAnalyzer::class);
-
-        unlink($this->app->getCachedRoutesPath());
     }
 
     #[Test]
