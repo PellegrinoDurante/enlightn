@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Reliability\UndefinedConstantAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\UndefinedConstantStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class UndefinedConstantAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class UndefinedConstantAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(UndefinedConstantAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_return_statements()
     {
         $this->setBasePathFrom(UndefinedConstantStub::class);
@@ -29,9 +28,7 @@ class UndefinedConstantAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(UndefinedConstantAnalyzer::class, 1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_return_statements()
     {
         $this->setBasePathFrom(DummyStub::class);

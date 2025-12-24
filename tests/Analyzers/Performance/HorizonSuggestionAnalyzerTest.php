@@ -4,6 +4,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 
 use Enlightn\Enlightn\Analyzers\Performance\HorizonSuggestionAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class HorizonSuggestionAnalyzerTest extends AnalyzerTestCase
 {
@@ -14,9 +15,7 @@ class HorizonSuggestionAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(HorizonSuggestionAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_non_redis_queues()
     {
         $this->runEnlightn();
@@ -24,9 +23,7 @@ class HorizonSuggestionAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(HorizonSuggestionAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_redis_queues_without_horizon()
     {
         $this->app->config->set('queue.default', 'redis');

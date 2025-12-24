@@ -8,15 +8,14 @@ use Enlightn\Enlightn\Analyzers\Security\AppKeyAnalyzer;
 use Enlightn\Enlightn\Console\EnlightnCommand;
 use Enlightn\Enlightn\Enlightn;
 use Illuminate\Testing\PendingCommand;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class EnlightnCommandTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function command_exits_with_success_status_code_on_passing()
     {
         $this->app->config->set('enlightn.analyzers', AppDebugAnalyzer::class);
@@ -26,9 +25,7 @@ class EnlightnCommandTest extends TestCase
         $this->artisan('enlightn')->assertExitCode(0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_exits_with_failure_status_code_on_failing()
     {
         $this->app->config->set('enlightn.analyzers', AppDebugAnalyzer::class);
@@ -38,9 +35,7 @@ class EnlightnCommandTest extends TestCase
         $this->artisan('enlightn')->assertExitCode(1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_exits_with_success_status_code_if_all_pass()
     {
         $this->app->config->set('enlightn.analyzers', [AppDebugAnalyzer::class, CachePrefixAnalyzer::class]);
@@ -51,9 +46,7 @@ class EnlightnCommandTest extends TestCase
         $this->artisan('enlightn')->assertExitCode(0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_exits_with_failure_status_code_if_any_one_fails()
     {
         $this->app->config->set('enlightn.analyzers', [AppDebugAnalyzer::class, CachePrefixAnalyzer::class]);
@@ -64,9 +57,7 @@ class EnlightnCommandTest extends TestCase
         $this->artisan('enlightn')->assertExitCode(1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function computes_percentage_properly()
     {
         if (! method_exists(PendingCommand::class, 'expectsTable')) {
@@ -96,9 +87,7 @@ class EnlightnCommandTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_exits_with_success_status_code_if_not_reportable()
     {
         $this->app->config->set('enlightn.analyzers', AppDebugAnalyzer::class);
@@ -109,9 +98,7 @@ class EnlightnCommandTest extends TestCase
         $this->artisan('enlightn')->assertExitCode(0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_exits_with_failure_status_code_if_any_one_reportable_fails()
     {
         $this->app->config->set('enlightn.analyzers', [AppDebugAnalyzer::class, CachePrefixAnalyzer::class]);
@@ -123,9 +110,7 @@ class EnlightnCommandTest extends TestCase
         $this->artisan('enlightn')->assertExitCode(1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_runs_in_ci_mode()
     {
         $this->app->config->set('enlightn.analyzers', [
@@ -140,9 +125,7 @@ class EnlightnCommandTest extends TestCase
         $this->artisan('enlightn --ci')->assertExitCode(0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_catches_exceptions()
     {
         $this->app->config->set('enlightn.analyzers', [
@@ -160,9 +143,7 @@ class EnlightnCommandTest extends TestCase
         $this->assertEquals(0, $status);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function command_can_display_exceptions()
     {
         $this->app->config->set('enlightn.analyzers', [

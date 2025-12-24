@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Reliability\MissingModelRelationAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\MissingRelationStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class MissingModelRelationAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class MissingModelRelationAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(MissingModelRelationAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_relations()
     {
         $this->setBasePathFrom(MissingRelationStub::class);
@@ -30,9 +29,7 @@ class MissingModelRelationAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(MissingModelRelationAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_relations()
     {
         $this->setBasePathFrom(DummyStub::class);

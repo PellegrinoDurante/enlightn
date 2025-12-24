@@ -4,6 +4,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 
 use Enlightn\Enlightn\Analyzers\Performance\AutoloaderOptimizationAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class AutoloaderOptimizationAnalyzerTest extends AnalyzerTestCase
 {
@@ -14,9 +15,7 @@ class AutoloaderOptimizationAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(AutoloaderOptimizationAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_in_local()
     {
         $this->app->config->set('app.env', 'local');
@@ -26,9 +25,7 @@ class AutoloaderOptimizationAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(AutoloaderOptimizationAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_non_optimized_autoloader()
     {
         $this->app->config->set('app.env', 'production');

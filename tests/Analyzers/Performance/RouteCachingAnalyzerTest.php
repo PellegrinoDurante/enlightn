@@ -4,6 +4,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 
 use Enlightn\Enlightn\Analyzers\Performance\RouteCachingAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class RouteCachingAnalyzerTest extends AnalyzerTestCase
 {
@@ -14,9 +15,7 @@ class RouteCachingAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(RouteCachingAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_cached_routes_in_local()
     {
         $this->app->config->set('app.env', 'local');
@@ -30,9 +29,7 @@ class RouteCachingAnalyzerTest extends AnalyzerTestCase
         unlink($this->app->getCachedRoutesPath());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_non_cached_routes_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -42,9 +39,7 @@ class RouteCachingAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(RouteCachingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_cached_routes_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -58,9 +53,7 @@ class RouteCachingAnalyzerTest extends AnalyzerTestCase
         unlink($this->app->getCachedRoutesPath());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_non_cached_routes_in_local()
     {
         $this->app->config->set('app.env', 'local');

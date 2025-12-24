@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Security\MassAssignmentAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\MassAssignmentStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class MassAssignmentAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class MassAssignmentAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(MassAssignmentAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_mass_assignment_vulnerabilities()
     {
         $this->setBasePathFrom(MassAssignmentStub::class);
@@ -48,9 +47,7 @@ class MassAssignmentAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(MassAssignmentAnalyzer::class, 9);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_injection_call()
     {
         $this->setBasePathFrom(DummyStub::class);

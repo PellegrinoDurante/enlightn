@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 use Enlightn\Enlightn\Analyzers\Reliability\CustomErrorPageAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithMiddleware;
+use PHPUnit\Framework\Attributes\Test;
 
 class CustomErrorPageAnalyzerTest extends AnalyzerTestCase
 {
@@ -17,9 +18,7 @@ class CustomErrorPageAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(CustomErrorPageAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skipped_for_stateless_apps()
     {
         $this->runEnlightn();
@@ -27,9 +26,7 @@ class CustomErrorPageAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(CustomErrorPageAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_no_custom_error_pages()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -39,9 +36,7 @@ class CustomErrorPageAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(CustomErrorPageAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_custom_error_pages()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -52,9 +47,7 @@ class CustomErrorPageAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(CustomErrorPageAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_custom_error_namespace()
     {
         $this->registerStatefulGlobalMiddleware();

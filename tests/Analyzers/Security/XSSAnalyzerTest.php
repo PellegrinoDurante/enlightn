@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 
 class XSSAnalyzerTest extends AnalyzerTestCase
 {
@@ -21,9 +22,7 @@ class XSSAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(XSSAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_stateless_apps()
     {
         $this->runEnlightn();
@@ -31,9 +30,7 @@ class XSSAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(XSSAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_local()
     {
         $this->app->config->set('app.env', 'local');
@@ -45,9 +42,7 @@ class XSSAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(XSSAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_csp_header()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -67,9 +62,7 @@ class XSSAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(XSSAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_unsafe_csp_header()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -89,9 +82,7 @@ class XSSAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(XSSAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_default_csp_header()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -111,9 +102,7 @@ class XSSAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(XSSAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_script_csp_header()
     {
         $this->registerStatefulGlobalMiddleware();

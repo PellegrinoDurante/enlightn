@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Reliability\DeprecatedCodeAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DeprecatedCodeStub;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class DeprecatedCodeAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class DeprecatedCodeAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(DeprecatedCodeAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_deprecated_code()
     {
         $this->setBasePathFrom(DeprecatedCodeStub::class);
@@ -37,9 +36,7 @@ class DeprecatedCodeAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(DeprecatedCodeAnalyzer::class, 9);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_deprecated_code()
     {
         $this->setBasePathFrom(DummyStub::class);

@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Security;
 use Enlightn\Enlightn\Analyzers\Security\AppKeyAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\Test;
 
 class AppKeyAnalyzerTest extends AnalyzerTestCase
 {
@@ -15,9 +16,7 @@ class AppKeyAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(AppKeyAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_no_app_key()
     {
         $this->app->config->set('app.key', null);
@@ -27,9 +26,7 @@ class AppKeyAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(AppKeyAnalyzer::class, $this->getConfigStubPath('app'), 122);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_incompatible_key_and_cipher()
     {
         $this->app->config->set('app.key', 'blahblah');
@@ -39,9 +36,7 @@ class AppKeyAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(AppKeyAnalyzer::class, $this->getConfigStubPath('app'), 122);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_proper_app_key_and_cipher()
     {
         $this->app->config->set('app.key', Str::random(32));

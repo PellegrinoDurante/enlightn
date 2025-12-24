@@ -4,6 +4,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 
 use Enlightn\Enlightn\Analyzers\Performance\DebugLogAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class DebugLogAnalyzerTest extends AnalyzerTestCase
 {
@@ -14,9 +15,7 @@ class DebugLogAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(DebugLogAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_critical_log_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -27,9 +26,7 @@ class DebugLogAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(DebugLogAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_debug_log_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -40,9 +37,7 @@ class DebugLogAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(DebugLogAnalyzer::class, $this->getConfigStubPath('logging'), 47);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_stack_channel_debug_log_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -56,9 +51,7 @@ class DebugLogAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(DebugLogAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_local()
     {
         $this->app->config->set('app.env', 'local');

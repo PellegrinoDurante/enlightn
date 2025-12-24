@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Performance\CollectionCallAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\CollectionStub;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class CollectionCallAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class CollectionCallAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(CollectionCallAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_suboptimal_collection_call()
     {
         $this->setBasePathFrom(CollectionStub::class);
@@ -30,9 +29,7 @@ class CollectionCallAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(CollectionCallAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_collection_call()
     {
         $this->setBasePathFrom(DummyStub::class);

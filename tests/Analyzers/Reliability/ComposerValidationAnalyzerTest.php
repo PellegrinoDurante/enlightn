@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 use Enlightn\Enlightn\Analyzers\Reliability\ComposerValidationAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithComposer;
+use PHPUnit\Framework\Attributes\Test;
 
 class ComposerValidationAnalyzerTest extends AnalyzerTestCase
 {
@@ -19,9 +20,7 @@ class ComposerValidationAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(ComposerValidationAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function confirms_passes_for_enlightn()
     {
         $this->runEnlightn();

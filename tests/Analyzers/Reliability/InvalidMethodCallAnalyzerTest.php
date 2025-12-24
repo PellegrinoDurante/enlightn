@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Reliability\InvalidMethodCallAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\InvalidMethodCallStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class InvalidMethodCallAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class InvalidMethodCallAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(InvalidMethodCallAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_invalid_method_calls()
     {
         $this->setBasePathFrom(InvalidMethodCallStub::class);
@@ -36,9 +35,7 @@ class InvalidMethodCallAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(InvalidMethodCallAnalyzer::class, 8);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ignores_errors()
     {
         $this->setBasePathFrom(InvalidMethodCallStub::class);
@@ -60,9 +57,7 @@ class InvalidMethodCallAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(InvalidMethodCallAnalyzer::class, 6);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_invalid_method_calls()
     {
         $this->setBasePathFrom(DummyStub::class);

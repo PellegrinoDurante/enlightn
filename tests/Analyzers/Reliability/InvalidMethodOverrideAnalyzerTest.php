@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 use Enlightn\Enlightn\Analyzers\Reliability\InvalidMethodOverrideAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class InvalidMethodOverrideAnalyzerTest extends AnalyzerTestCase
 {
@@ -19,9 +20,7 @@ class InvalidMethodOverrideAnalyzerTest extends AnalyzerTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_invalid_method_overrides()
     {
         $this->app->config->set(
@@ -36,9 +35,7 @@ class InvalidMethodOverrideAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(InvalidMethodOverrideAnalyzer::class, 1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_invalid_overrides()
     {
         $this->setBasePathFrom(DummyStub::class);

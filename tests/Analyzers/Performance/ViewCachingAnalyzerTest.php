@@ -4,6 +4,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 
 use Enlightn\Enlightn\Analyzers\Performance\ViewCachingAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ViewCachingAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class ViewCachingAnalyzerTest extends AnalyzerTestCase
         $app->config->set('view.paths', [$this->getViewStubPath()]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_non_cached_views_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -30,9 +29,7 @@ class ViewCachingAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(ViewCachingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_cached_views_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -46,9 +43,7 @@ class ViewCachingAnalyzerTest extends AnalyzerTestCase
         $this->artisan('view:clear');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_non_cached_views_in_local()
     {
         $this->app->config->set('app.env', 'local');

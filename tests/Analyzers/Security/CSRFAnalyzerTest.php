@@ -8,6 +8,7 @@ use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithMiddleware;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 
 class CSRFAnalyzerTest extends AnalyzerTestCase
 {
@@ -20,9 +21,7 @@ class CSRFAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(CSRFAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_stateless_apps()
     {
         $this->runEnlightn();
@@ -30,9 +29,7 @@ class CSRFAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(CSRFAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_global_csrf_middleware()
     {
         $this->clearMiddlewareGroups();
@@ -44,9 +41,7 @@ class CSRFAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(CSRFAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_web_group_middleware()
     {
         $this->clearMiddlewareGroups();
@@ -58,9 +53,7 @@ class CSRFAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(CSRFAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_post_routes_with_individual_csrf_protection()
     {
         $this->clearMiddlewareGroups();
@@ -72,9 +65,7 @@ class CSRFAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(CSRFAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_post_routes_without_protection()
     {
         $this->clearMiddlewareGroups();
@@ -86,9 +77,7 @@ class CSRFAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(CSRFAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_some_routes_without_protection()
     {
         $this->clearMiddlewareGroups();

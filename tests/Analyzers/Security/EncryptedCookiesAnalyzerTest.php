@@ -7,6 +7,7 @@ use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithMiddleware;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 
 class EncryptedCookiesAnalyzerTest extends AnalyzerTestCase
 {
@@ -19,9 +20,7 @@ class EncryptedCookiesAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(EncryptedCookiesAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_stateless_apps()
     {
         $this->runEnlightn();
@@ -29,9 +28,7 @@ class EncryptedCookiesAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(EncryptedCookiesAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_encrypt_cookies_middleware()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -42,9 +39,7 @@ class EncryptedCookiesAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(EncryptedCookiesAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_encrypt_cookies_middleware()
     {
         $this->registerStatefulGlobalMiddleware();

@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Security;
 use Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithComposer;
+use PHPUnit\Framework\Attributes\Test;
 
 class StableDependencyAnalyzerTest extends AnalyzerTestCase
 {
@@ -19,9 +20,7 @@ class StableDependencyAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(StableDependencyAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function confirms_enlightn_has_stable_dependencies()
     {
         $this->runEnlightn();

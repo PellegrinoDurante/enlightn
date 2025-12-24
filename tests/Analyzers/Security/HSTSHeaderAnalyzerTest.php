@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 
 class HSTSHeaderAnalyzerTest extends AnalyzerTestCase
 {
@@ -18,9 +19,7 @@ class HSTSHeaderAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(HSTSHeaderAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_http_apps()
     {
         $this->runEnlightn();
@@ -28,9 +27,7 @@ class HSTSHeaderAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(HSTSHeaderAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_hsts_header_for_https_url()
     {
         $this->app->config->set('app.url', 'https://localhost');
@@ -50,9 +47,7 @@ class HSTSHeaderAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(HSTSHeaderAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_hsts_header_for_secure_cookie_attributes()
     {
         $this->app->config->set('session.secure', true);
@@ -72,9 +67,7 @@ class HSTSHeaderAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(HSTSHeaderAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_hsts_headers()
     {
         $this->app->config->set('session.secure', true);

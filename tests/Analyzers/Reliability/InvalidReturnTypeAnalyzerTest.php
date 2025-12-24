@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\InvalidReturnTypeStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class InvalidReturnTypeAnalyzerTest extends AnalyzerTestCase
 {
@@ -16,9 +17,7 @@ class InvalidReturnTypeAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(InvalidReturnTypeAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_invalid_offset()
     {
         $this->setBasePathFrom(InvalidReturnTypeStub::class);
@@ -34,9 +33,7 @@ class InvalidReturnTypeAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(InvalidReturnTypeAnalyzer::class, 6);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_offset()
     {
         $this->setBasePathFrom(DummyStub::class);

@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 use Enlightn\Enlightn\Analyzers\Reliability\SyntaxErrorAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class SyntaxErrorAnalyzerTest extends AnalyzerTestCase
 {
@@ -15,9 +16,7 @@ class SyntaxErrorAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(SyntaxErrorAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_syntax_errors()
     {
         $this->app->config->set('enlightn.base_path', $this->getBaseStubPath());
@@ -31,9 +30,7 @@ class SyntaxErrorAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(SyntaxErrorAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_errors()
     {
         $this->setBasePathFrom(DummyStub::class);

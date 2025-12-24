@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Reliability\EnvFileAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
+use PHPUnit\Framework\Attributes\Test;
 
 class EnvFileAnalyzerTest extends AnalyzerTestCase
 {
@@ -24,9 +25,7 @@ class EnvFileAnalyzerTest extends AnalyzerTestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_env_file()
     {
         $this->files->shouldReceive('exists')->with(base_path('.env'))->andReturn(true);
@@ -36,9 +35,7 @@ class EnvFileAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(EnvFileAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_env_file()
     {
         $this->files->shouldReceive('exists')->with(base_path('.env'))->andReturn(false);

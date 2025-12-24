@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 use Enlightn\Enlightn\Analyzers\Reliability\EnvExampleAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\EnvStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class EnvExampleAnalyzerTest extends AnalyzerTestCase
 {
@@ -17,9 +18,7 @@ class EnvExampleAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(EnvExampleAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_env_variables()
     {
         $this->app->setBasePath(dirname($this->getClassStubPath(EnvStub::class)));

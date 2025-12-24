@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Reliability\UpToDateMigrationsAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Kernel;
 use Illuminate\Support\Facades\Artisan;
+use PHPUnit\Framework\Attributes\Test;
 
 class UpToDateMigrationsAnalyzerTest extends AnalyzerTestCase
 {
@@ -27,9 +28,7 @@ class UpToDateMigrationsAnalyzerTest extends AnalyzerTestCase
         $app->singleton('Illuminate\Contracts\Console\Kernel', Kernel::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_remaining_migrations()
     {
         Artisan::shouldReceive('call');
@@ -40,9 +39,7 @@ class UpToDateMigrationsAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(UpToDateMigrationsAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_pending_migrations()
     {
         Artisan::shouldReceive('call');

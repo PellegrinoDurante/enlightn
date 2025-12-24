@@ -6,6 +6,7 @@ use Enlightn\Enlightn\Analyzers\Performance\SharedCacheLockAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\SharedCacheLockStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class SharedCacheLockAnalyzerTest extends AnalyzerTestCase
 {
@@ -19,9 +20,7 @@ class SharedCacheLockAnalyzerTest extends AnalyzerTestCase
         $app->config->set('cache.stores.redis.lock_connection', null);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_cache_lock_method()
     {
         $this->setBasePathFrom(SharedCacheLockStub::class);
@@ -33,9 +32,7 @@ class SharedCacheLockAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(SharedCacheLockAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_separate_lock_connection()
     {
         $this->app->config->set('cache.stores.redis.lock_connection', 'default');
@@ -46,9 +43,7 @@ class SharedCacheLockAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(SharedCacheLockAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_cache_lock_method()
     {
         $this->setBasePathFrom(DummyStub::class);

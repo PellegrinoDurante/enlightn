@@ -5,6 +5,7 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 use Enlightn\Enlightn\Analyzers\Performance\DevDependencyAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithComposer;
+use PHPUnit\Framework\Attributes\Test;
 
 class DevDependencyAnalyzerTest extends AnalyzerTestCase
 {
@@ -19,9 +20,7 @@ class DevDependencyAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(DevDependencyAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_dev_dependencies_in_production()
     {
         $this->app->config->set('app.env', 'production');
@@ -31,9 +30,7 @@ class DevDependencyAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(DevDependencyAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_dev_dependencies_in_local()
     {
         $this->app->config->set('app.env', 'local');
