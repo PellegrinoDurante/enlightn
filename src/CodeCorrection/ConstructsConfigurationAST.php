@@ -26,10 +26,10 @@ trait ConstructsConfigurationAST
             foreach ($value as $arrayKey => $arrayValue) {
                 if (is_string($arrayKey)) {
                     // Assuming associative array.
-                    $items[] = new Node\Expr\ArrayItem($this->getConfiguration($arrayValue), $this->getConfiguration($arrayKey));
+                    $items[] = new Node\ArrayItem($this->getConfiguration($arrayValue), $this->getConfiguration($arrayKey));
                 } else {
                     // Assuming sequential array.
-                    $items[] = new Node\Expr\ArrayItem($this->getConfiguration($arrayValue), null);
+                    $items[] = new Node\ArrayItem($this->getConfiguration($arrayValue), null);
                 }
             }
 

@@ -4,8 +4,8 @@ namespace Enlightn\Enlightn\PHPStan;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use PhpParser\Node\PropertyItem;
 use PhpParser\Node;
-use PhpParser\Node\Stmt\PropertyProperty;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 
@@ -18,7 +18,7 @@ class FillableForeignKeyModelRule implements Rule
      */
     public function getNodeType(): string
     {
-        return PropertyProperty::class;
+        return PropertyItem::class;
     }
 
     /**
