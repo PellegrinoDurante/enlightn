@@ -7,19 +7,18 @@ use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Illuminate\Database\Connection;
 use Illuminate\Support\Facades\DB;
 use Mockery as m;
+use PHPUnit\Framework\Attributes\Test;
 
 class DatabaseStatusAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(DatabaseStatusAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function checks_db_access()
     {
         $this->app->config->set('database.default', 'mysql');

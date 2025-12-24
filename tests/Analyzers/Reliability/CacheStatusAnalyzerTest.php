@@ -4,19 +4,18 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 
 use Enlightn\Enlightn\Analyzers\Reliability\CacheStatusAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class CacheStatusAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(CacheStatusAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_default_file_driver()
     {
         $this->runEnlightn();
@@ -24,9 +23,7 @@ class CacheStatusAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(CacheStatusAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_non_existent_storage_path()
     {
         $this->app->config->set('cache.default', 'memcached');

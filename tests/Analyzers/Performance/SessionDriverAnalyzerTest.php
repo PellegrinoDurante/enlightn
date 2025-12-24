@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Performance\SessionDriverAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 
 class SessionDriverAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(SessionDriverAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skipped_for_stateless_apps()
     {
         $this->runEnlightn();
@@ -26,9 +25,7 @@ class SessionDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(SessionDriverAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_null_session_driver()
     {
         $this->app->config->set('session.driver', 'null');
@@ -40,9 +37,7 @@ class SessionDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(SessionDriverAnalyzer::class, $this->getConfigStubPath('session'), 12);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_array_session_driver()
     {
         $this->app->config->set('session.driver', 'array');
@@ -54,9 +49,7 @@ class SessionDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(SessionDriverAnalyzer::class, $this->getConfigStubPath('session'), 12);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_file_session_driver_in_production()
     {
         $this->app->config->set('session.driver', 'file');
@@ -69,9 +62,7 @@ class SessionDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(SessionDriverAnalyzer::class, $this->getConfigStubPath('session'), 12);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_file_session_driver_in_local()
     {
         $this->app->config->set('session.driver', 'file');
@@ -84,9 +75,7 @@ class SessionDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(SessionDriverAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_cookie_session_driver_in_production()
     {
         $this->app->config->set('session.driver', 'cookie');
@@ -99,9 +88,7 @@ class SessionDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(SessionDriverAnalyzer::class, $this->getConfigStubPath('session'), 12);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_cookie_session_driver_in_local()
     {
         $this->app->config->set('session.driver', 'cookie');

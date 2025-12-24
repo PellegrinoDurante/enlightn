@@ -5,23 +5,22 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 use Enlightn\Enlightn\Analyzers\Reliability\ComposerValidationAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithComposer;
+use PHPUnit\Framework\Attributes\Test;
 
 class ComposerValidationAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithComposer;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->replaceComposer($app);
 
         $this->setupEnvironmentFor(ComposerValidationAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function confirms_passes_for_enlightn()
     {
         $this->runEnlightn();

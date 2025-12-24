@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Security\UnguardedModelsAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\UnguardedModelStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class UnguardedModelTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(UnguardedModelsAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_unguarded_models()
     {
         $this->setBasePathFrom(UnguardedModelStub::class);
@@ -30,9 +29,7 @@ class UnguardedModelTest extends AnalyzerTestCase
         $this->assertHasErrors(UnguardedModelsAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_no_unguarded_models()
     {
         $this->setBasePathFrom(DummyStub::class);

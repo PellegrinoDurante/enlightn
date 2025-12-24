@@ -4,12 +4,13 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Security;
 
 use Enlightn\Enlightn\Analyzers\Security\AppDebugHideAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class AppDebugHideAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(
             AppDebugHideAnalyzer::class,
@@ -18,9 +19,7 @@ class AppDebugHideAnalyzerTest extends AnalyzerTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_empty_app_debug_hide_in_staging()
     {
         $this->app->config->set('app.env', 'staging');
@@ -31,9 +30,7 @@ class AppDebugHideAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(AppDebugHideAnalyzer::class, $this->getConfigStubPath('app'), 42);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_debug_mode_off()
     {
         $this->app->config->set('app.debug', false);
@@ -43,9 +40,7 @@ class AppDebugHideAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(AppDebugHideAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_non_empty_debug_hide()
     {
         $this->app->config->set('app.env', 'staging');
@@ -57,9 +52,7 @@ class AppDebugHideAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(AppDebugHideAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_non_empty_debug_blacklist()
     {
         $this->app->config->set('app.env', 'staging');

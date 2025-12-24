@@ -5,19 +5,18 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 use Enlightn\Enlightn\Analyzers\Performance\MinificationAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Illuminate\Filesystem\Filesystem;
+use PHPUnit\Framework\Attributes\Test;
 
 class MinificationAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(MinificationAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_local_env()
     {
         $this->app->config->set('app.env', 'local');
@@ -27,9 +26,7 @@ class MinificationAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(MinificationAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_no_assets_to_minify()
     {
         $this->app->config->set('app.env', 'production');
@@ -39,9 +36,7 @@ class MinificationAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(MinificationAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_unminified_files()
     {
         $this->app->config->set('app.env', 'production');
@@ -60,9 +55,7 @@ class MinificationAnalyzerTest extends AnalyzerTestCase
         (new Filesystem())->deleteDirectory(public_path('unminified_assets'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_minified_assets()
     {
         $this->app->config->set('app.env', 'production');

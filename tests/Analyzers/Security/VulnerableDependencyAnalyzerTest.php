@@ -8,23 +8,22 @@ use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithComposer;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\Test;
 
 class VulnerableDependencyAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithComposer;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->replaceComposer($app);
 
         $this->setupEnvironmentFor(VulnerableDependencyAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function confirms_enlightn_has_no_vulnerable_dependencies()
     {
         if (Str::startsWith(Application::VERSION, '7')) {
@@ -37,9 +36,7 @@ class VulnerableDependencyAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(VulnerableDependencyAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_vulnerable_dependencies()
     {
         app(Composer::class)->setWorkingPath($this->getBaseStubPath());

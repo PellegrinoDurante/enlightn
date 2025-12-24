@@ -5,21 +5,20 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Security;
 use Enlightn\Enlightn\Analyzers\Security\HttpOnlyCookieAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithMiddleware;
+use PHPUnit\Framework\Attributes\Test;
 
 class HttpOnlyCookieAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithMiddleware;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(HttpOnlyCookieAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_no_http_only()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -31,9 +30,7 @@ class HttpOnlyCookieAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(HttpOnlyCookieAnalyzer::class, $this->getConfigStubPath('session'), 184);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_http_only()
     {
         $this->registerStatefulGlobalMiddleware();
@@ -45,9 +42,7 @@ class HttpOnlyCookieAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(HttpOnlyCookieAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_for_stateless_apps()
     {
         $this->runEnlightn();

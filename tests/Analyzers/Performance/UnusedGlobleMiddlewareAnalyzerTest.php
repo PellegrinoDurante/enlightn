@@ -10,21 +10,20 @@ use Enlightn\Enlightn\Tests\Middleware\UnusedTrustProxiesL9;
 use Fruitcake\Cors\HandleCors;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Middleware\TrustHosts;
+use PHPUnit\Framework\Attributes\Test;
 
 class UnusedGlobleMiddlewareAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithMiddleware;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(UnusedGlobalMiddlewareAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_global_middleware()
     {
         $this->clearMiddleware();
@@ -34,9 +33,7 @@ class UnusedGlobleMiddlewareAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(UnusedGlobalMiddlewareAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_trusted_hosts_without_trusted_proxies()
     {
         $kernel = $this->clearMiddleware();
@@ -47,9 +44,7 @@ class UnusedGlobleMiddlewareAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(UnusedGlobalMiddlewareAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_wildcard_trusted_proxies()
     {
         $kernel = $this->clearMiddleware();
@@ -60,9 +55,7 @@ class UnusedGlobleMiddlewareAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(UnusedGlobalMiddlewareAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_unused_trusted_proxies()
     {
         $kernel = $this->clearMiddleware();
@@ -73,9 +66,7 @@ class UnusedGlobleMiddlewareAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(UnusedGlobalMiddlewareAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_unused_cors()
     {
         $this->app->config->set('cors.paths', []);

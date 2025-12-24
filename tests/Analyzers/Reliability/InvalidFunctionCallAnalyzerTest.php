@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Reliability\InvalidFunctionCallAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\InvalidFunctionCallStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class InvalidFunctionCallAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(InvalidFunctionCallAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_invalid_function_calls()
     {
         $this->setBasePathFrom(InvalidFunctionCallStub::class);
@@ -30,9 +29,7 @@ class InvalidFunctionCallAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(InvalidFunctionCallAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_invalid_function_calls()
     {
         $this->setBasePathFrom(DummyStub::class);

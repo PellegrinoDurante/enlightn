@@ -5,23 +5,22 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Security;
 use Enlightn\Enlightn\Analyzers\Security\LicenseAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithComposer;
+use PHPUnit\Framework\Attributes\Test;
 
 class LicenseAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithComposer;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->replaceComposer($app);
 
         $this->setupEnvironmentFor(LicenseAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function confirms_enlightn_uses_dependencies_with_safe_licenses()
     {
         // set GPL 2 to be valid for Enlightn, since Larastan uses phpmyadmin/sql-parser

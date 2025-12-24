@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 
 class MassAssignmentBuilderInstanceRule implements Rule
 {
@@ -22,7 +23,7 @@ class MassAssignmentBuilderInstanceRule implements Rule
     /**
      * @param Node $node
      * @param Scope $scope
-     * @return string[]
+     * @return array<\PHPStan\Rules\RuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -41,11 +42,11 @@ class MassAssignmentBuilderInstanceRule implements Rule
 
         if (isset($node->args[0]) && $this->retrievesRequestInput($node->args[0], $scope)) {
             return [
-                sprintf(
+                RuleErrorBuilder::message(sprintf(
                     "Call to %s method on an Eloquent/query builder instance with request data may result in a "
                     ."mass assignment vulnerability.",
                     $methodName
-                ),
+                ))->build(),
             ];
         }
 

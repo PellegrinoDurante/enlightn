@@ -185,7 +185,7 @@ class Enlightn
                 return in_array($class, $ciAnalyzers);
             }
 
-            return $class::$runInCI && ! in_array($class, config('enlightn.ci_mode_exclude_analyzers'));
+            return $class::$runInCI && ! in_array($class, config('enlightn.ci_mode_exclude_analyzers') ?? []);
         });
     }
 

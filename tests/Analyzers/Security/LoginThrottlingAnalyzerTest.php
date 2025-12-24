@@ -15,14 +15,15 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Mockery as m;
+use PHPUnit\Framework\Attributes\Test;
 
 class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithMiddleware;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $router = $app->make(Router::class);
         $kernel = $app->make(Kernel::class);
@@ -34,9 +35,7 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(LoginThrottlingAnalyzer::class, $app, $analyzer);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_rate_limiter_facade_usage()
     {
         $this->setBasePathFrom(LoginThrottlingFacadeStub::class);
@@ -50,9 +49,7 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(LoginThrottlingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_rate_limiter_instance_usage()
     {
         $this->setBasePathFrom(LoginThrottlingInstanceStub::class);
@@ -66,9 +63,7 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(LoginThrottlingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_rate_limiter_anonymous_instance_usage()
     {
         $this->setBasePathFrom(LoginThrottlingAnonymousInstanceStub::class);
@@ -82,9 +77,7 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(LoginThrottlingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_rate_limiter_subclass_instance_usage()
     {
         $this->setBasePathFrom(LoginThrottlingSubClassInstanceStub::class);
@@ -98,9 +91,7 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(LoginThrottlingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_unprotected_route()
     {
         $this->setBasePathFrom(DummyStub::class);
@@ -114,9 +105,7 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(LoginThrottlingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_protected_route()
     {
         $this->setBasePathFrom(DummyStub::class);
@@ -130,9 +119,7 @@ class LoginThrottlingAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(LoginThrottlingAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_aliased_middleware_protected_route()
     {
         $this->setBasePathFrom(DummyStub::class);

@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Reliability\UnsetAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\UnsetStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class UnsetAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(UnsetAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_invalid_unset_statements()
     {
         $this->setBasePathFrom(UnsetStub::class);
@@ -33,9 +32,7 @@ class UnsetAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(UnsetAnalyzer::class, 5);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_unset_statements()
     {
         $this->setBasePathFrom(DummyStub::class);

@@ -3,7 +3,7 @@
 namespace Enlightn\Enlightn\Inspection\NodeVisitors;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 
 class UsesClassVisitor extends NodeVisitor
 {
@@ -17,7 +17,7 @@ class UsesClassVisitor extends NodeVisitor
 
     public function enterNode(Node $node)
     {
-        if ($node instanceof UseUse
+        if ($node instanceof UseItem
             && ($node->name->toString() === $this->class
                 || is_subclass_of($node->name->toString(), $this->class))) {
             // Here we register a use ClassName or use ChildClass statement.

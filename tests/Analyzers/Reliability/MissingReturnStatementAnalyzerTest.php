@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Reliability\MissingReturnStatementAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\MissingReturnStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class MissingReturnStatementAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(MissingReturnStatementAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_return_statements()
     {
         $this->setBasePathFrom(MissingReturnStub::class);
@@ -30,9 +29,7 @@ class MissingReturnStatementAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(MissingReturnStatementAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_return_statements()
     {
         $this->setBasePathFrom(DummyStub::class);

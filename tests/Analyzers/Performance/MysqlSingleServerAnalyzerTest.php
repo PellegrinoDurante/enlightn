@@ -4,12 +4,13 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 
 use Enlightn\Enlightn\Analyzers\Performance\MysqlSingleServerAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class MysqlSingleServerAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $app->config->set('app.env', 'production');
         $app->config->set('database.default', 'mysql');
@@ -17,9 +18,7 @@ class MysqlSingleServerAnalyzerTest extends AnalyzerTestCase
         $this->setupEnvironmentFor(MysqlSingleServerAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_single_server_setup_without_sockets()
     {
         $this->runEnlightn();
@@ -27,9 +26,7 @@ class MysqlSingleServerAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(MysqlSingleServerAnalyzer::class, $this->getConfigStubPath('database'), 54);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_single_server_setup_with_unix_sockets()
     {
         $this->app->config->set('database.connections.mysql.unix_socket', '/path/to/some/mysql.sock');

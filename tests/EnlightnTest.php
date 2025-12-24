@@ -11,19 +11,18 @@ use Enlightn\Enlightn\Analyzers\Security\CSRFAnalyzer;
 use Enlightn\Enlightn\Enlightn;
 use Enlightn\Enlightn\Tests\Stubs\CustomCategoryStub;
 use Mockery as m;
+use PHPUnit\Framework\Attributes\Test;
 
 class EnlightnTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $app->config->set('enlightn.analyzers', AppDebugAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function registers_analyzer_classes()
     {
         Enlightn::register();
@@ -32,9 +31,7 @@ class EnlightnTest extends TestCase
         $this->assertNotContains(Analyzer::class, Enlightn::$analyzerClasses);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function registers_analyzer_categories()
     {
         $this->app->config->set(
@@ -52,9 +49,7 @@ class EnlightnTest extends TestCase
         $this->assertEquals(['Security', 'Performance', 'Reliability', 'Custom'], Enlightn::$categories);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function excludes_analyzer_classes()
     {
         $this->app->config->set('enlightn.analyzers', '*');
@@ -65,9 +60,7 @@ class EnlightnTest extends TestCase
         $this->assertNotContains(AppDebugAnalyzer::class, Enlightn::$analyzerClasses);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function filters_analyzer_classes_for_ci()
     {
         $this->app->config->set('enlightn.analyzers', '*');
@@ -79,9 +72,7 @@ class EnlightnTest extends TestCase
         $this->assertContains(DeadCodeAnalyzer::class, Enlightn::$analyzerClasses);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function excludes_analyzer_classes_for_ci()
     {
         $this->app->config->set('enlightn.analyzers', '*');
@@ -95,9 +86,7 @@ class EnlightnTest extends TestCase
         $this->assertContains(AppDebugAnalyzer::class, Enlightn::$analyzerClasses);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function allows_overriding_analyzer_classes_for_ci()
     {
         $this->app->config->set('enlightn.analyzers', '*');
@@ -111,9 +100,7 @@ class EnlightnTest extends TestCase
         $this->assertCount(2, Enlightn::$analyzerClasses);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function runs_analyzer_classes()
     {
         Enlightn::register();
@@ -128,9 +115,7 @@ class EnlightnTest extends TestCase
         Enlightn::run($this->app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parses_analyzer_classes_recursively()
     {
         $this->app->config->set('enlightn.analyzers', '*');
@@ -138,9 +123,7 @@ class EnlightnTest extends TestCase
         $this->assertContains(AppDebugAnalyzer::class, Enlightn::getAnalyzerClasses());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function runs_before_running_callback()
     {
         Enlightn::register();

@@ -7,19 +7,18 @@ use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
 
 class EnvAccessAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(EnvAccessAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_publicly_accessible_env_file()
     {
         $this->app->make(EnvAccessAnalyzer::class)->setClient(new Client(
@@ -33,9 +32,7 @@ class EnvAccessAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(EnvAccessAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_safe_setup()
     {
         $this->app->make(EnvAccessAnalyzer::class)->setClient(new Client(

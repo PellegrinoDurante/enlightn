@@ -4,19 +4,18 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 
 use Enlightn\Enlightn\Analyzers\Reliability\CachePrefixAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class CachePrefixAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(CachePrefixAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_empty_cache_prefix()
     {
         $this->app->config->set('cache.prefix', '');
@@ -26,9 +25,7 @@ class CachePrefixAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(CachePrefixAnalyzer::class, $this->getConfigStubPath('cache'), 102);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_generic_cache_prefix()
     {
         $this->app->config->set('cache.prefix', 'laravel_cache');
@@ -38,9 +35,7 @@ class CachePrefixAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(CachePrefixAnalyzer::class, $this->getConfigStubPath('cache'), 102);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_specific_cache_prefix()
     {
         $this->app->config->set('cache.prefix', 'enlightn_cache');

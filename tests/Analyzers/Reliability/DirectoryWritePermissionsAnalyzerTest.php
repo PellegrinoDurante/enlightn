@@ -6,14 +6,15 @@ use Enlightn\Enlightn\Analyzers\Reliability\DirectoryWritePermissionsAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
+use PHPUnit\Framework\Attributes\Test;
 
 class DirectoryWritePermissionsAnalyzerTest extends AnalyzerTestCase
 {
     protected $files;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(DirectoryWritePermissionsAnalyzer::class, $app);
 
@@ -24,9 +25,7 @@ class DirectoryWritePermissionsAnalyzerTest extends AnalyzerTestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_writable_directories()
     {
         $this->files->shouldReceive('isWritable')->andReturn(true);
@@ -36,9 +35,7 @@ class DirectoryWritePermissionsAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(DirectoryWritePermissionsAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_unwritable_directories()
     {
         $this->files->shouldReceive('isWritable')->andReturn(false);

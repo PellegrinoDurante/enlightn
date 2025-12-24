@@ -5,21 +5,20 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Security;
 use Enlightn\Enlightn\Analyzers\Security\FilePermissionsAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Analyzers\Concerns\InteractsWithMiddleware;
+use PHPUnit\Framework\Attributes\Test;
 
 class FilePermissionsAnalyzerTest extends AnalyzerTestCase
 {
     use InteractsWithMiddleware;
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(FilePermissionsAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_max_permissions()
     {
         $this->app->config->set('enlightn.allowed_permissions', [
@@ -31,9 +30,7 @@ class FilePermissionsAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(FilePermissionsAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fails_for_min_permissions()
     {
         $this->app->config->set('enlightn.allowed_permissions', [

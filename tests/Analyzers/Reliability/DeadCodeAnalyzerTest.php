@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Reliability\DeadCodeAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DeadCodeStub;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class DeadCodeAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(DeadCodeAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_dead_code()
     {
         $this->setBasePathFrom(DeadCodeStub::class);
@@ -34,9 +33,7 @@ class DeadCodeAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(DeadCodeAnalyzer::class, 6);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_dead_code()
     {
         $this->setBasePathFrom(DummyStub::class);

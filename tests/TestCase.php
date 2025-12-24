@@ -5,17 +5,10 @@ namespace Enlightn\Enlightn\Tests;
 use Enlightn\Enlightn\Enlightn;
 use Enlightn\Enlightn\EnlightnServiceProvider;
 use Enlightn\Enlightn\Inspection\Inspector;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {
-    use MockeryPHPUnitIntegration;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
 
     protected function tearDown(): void
     {
@@ -33,7 +26,7 @@ class TestCase extends OrchestraTestCase
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
         $app->config->set('enlightn.base_path', __DIR__.DIRECTORY_SEPARATOR.'Stubs');
 

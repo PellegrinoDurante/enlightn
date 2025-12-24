@@ -4,19 +4,18 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Performance;
 
 use Enlightn\Enlightn\Analyzers\Performance\CacheDriverAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class CacheDriverAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(CacheDriverAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_null_cache_driver()
     {
         $this->app->config->set('cache.default', 'null');
@@ -26,9 +25,7 @@ class CacheDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(CacheDriverAnalyzer::class, $this->getConfigStubPath('cache'), 18);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_array_cache_driver()
     {
         $this->app->config->set('cache.default', 'array');
@@ -38,9 +35,7 @@ class CacheDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(CacheDriverAnalyzer::class, $this->getConfigStubPath('cache'), 18);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_file_cache_driver_in_non_local_env()
     {
         $this->app->config->set('cache.default', 'file');
@@ -51,9 +46,7 @@ class CacheDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(CacheDriverAnalyzer::class, $this->getConfigStubPath('cache'), 18);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_file_cache_driver_in_local_env()
     {
         $this->app->config->set('cache.default', 'file');
@@ -64,9 +57,7 @@ class CacheDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(CacheDriverAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_database_cache_driver_in_non_local_env()
     {
         $this->app->config->set('cache.default', 'database');
@@ -77,9 +68,7 @@ class CacheDriverAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(CacheDriverAnalyzer::class, $this->getConfigStubPath('cache'), 18);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_database_cache_driver_in_local_env()
     {
         $this->app->config->set('cache.default', 'database');

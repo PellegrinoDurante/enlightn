@@ -8,19 +8,18 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Filesystem\Filesystem;
+use PHPUnit\Framework\Attributes\Test;
 
 class CacheHeaderAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(CacheHeaderAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function skips_without_mix_manifest()
     {
         $this->runEnlightn();
@@ -28,9 +27,7 @@ class CacheHeaderAnalyzerTest extends AnalyzerTestCase
         $this->assertSkipped(CacheHeaderAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_missing_cache_headers()
     {
         $this->app->config->set('app.env', 'production');
@@ -58,9 +55,7 @@ class CacheHeaderAnalyzerTest extends AnalyzerTestCase
         (new Filesystem())->delete(public_path('mix-manifest.json'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_cache_headers()
     {
         $this->app->config->set('app.env', 'production');

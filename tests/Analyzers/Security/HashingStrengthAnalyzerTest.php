@@ -4,19 +4,18 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Security;
 
 use Enlightn\Enlightn\Analyzers\Security\HashingStrengthAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class HashingStrengthAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(HashingStrengthAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_secure_bcrypt()
     {
         $this->app->config->set('hashing.driver', 'bcrypt');
@@ -27,9 +26,7 @@ class HashingStrengthAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(HashingStrengthAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fails_for_insecure_bcrypt()
     {
         $this->app->config->set('hashing.driver', 'bcrypt');
@@ -40,9 +37,7 @@ class HashingStrengthAnalyzerTest extends AnalyzerTestCase
         $this->assertFailed(HashingStrengthAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_for_secure_argon()
     {
         $this->app->config->set('hashing.driver', 'argon');
@@ -55,9 +50,7 @@ class HashingStrengthAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(HashingStrengthAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fails_for_insecure_argon()
     {
         $this->app->config->set('hashing.driver', 'argon');

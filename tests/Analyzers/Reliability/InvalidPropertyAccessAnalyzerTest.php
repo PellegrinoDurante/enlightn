@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\InvalidAccessPropertiesStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class InvalidPropertyAccessAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(InvalidPropertyAccessAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_invalid_property_access()
     {
         $this->setBasePathFrom(InvalidAccessPropertiesStub::class);
@@ -30,9 +29,7 @@ class InvalidPropertyAccessAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(InvalidPropertyAccessAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_invalid_access()
     {
         $this->setBasePathFrom(DummyStub::class);

@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Reliability\UndefinedVariableAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\UndefinedVariableStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class UndefinedVariableAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(UndefinedVariableAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_undefined_variables()
     {
         $this->setBasePathFrom(UndefinedVariableStub::class);
@@ -30,9 +29,7 @@ class UndefinedVariableAnalyzerTest extends AnalyzerTestCase
         $this->assertHasErrors(UndefinedVariableAnalyzer::class, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_undefined_variables()
     {
         $this->setBasePathFrom(DummyStub::class);

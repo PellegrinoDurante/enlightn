@@ -4,21 +4,20 @@ namespace Enlightn\Enlightn\Tests\Analyzers\Reliability;
 
 use Enlightn\Enlightn\Analyzers\Reliability\QueueTimeoutAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(QueueTimeoutAnalyzer::class, $app);
 
         $this->loadConfigFromStub('horizon', $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_defaults()
     {
         $this->runEnlightn();
@@ -26,9 +25,7 @@ class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(QueueTimeoutAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_sqs()
     {
         $this->app->config->set('queue.default', 'sqs');
@@ -39,9 +36,7 @@ class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(QueueTimeoutAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_low_retry_after_for_default_queue()
     {
         $this->app->config->set('queue.default', 'redis');
@@ -52,9 +47,7 @@ class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(QueueTimeoutAnalyzer::class, $this->getConfigStubPath('queue'), 66);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_low_retry_after_for_non_default_queue()
     {
         $this->app->config->set('queue.connections.redis.retry_after', 45);
@@ -64,9 +57,7 @@ class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(QueueTimeoutAnalyzer::class, $this->getConfigStubPath('queue'), 66);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_horizon_default_timeouts()
     {
         $this->app->config->set('queue.default', 'redis');
@@ -77,9 +68,7 @@ class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(QueueTimeoutAnalyzer::class, $this->getConfigStubPath('queue'), 66);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_horizon_environment_specific_timeouts()
     {
         $this->app->config->set('queue.default', 'redis');
@@ -90,9 +79,7 @@ class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(QueueTimeoutAnalyzer::class, $this->getConfigStubPath('queue'), 66);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_horizon_multiple_default_timeouts()
     {
         $this->app->config->set('queue.default', 'redis');
@@ -104,9 +91,7 @@ class QueueTimeoutAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(QueueTimeoutAnalyzer::class, $this->getConfigStubPath('queue'), 66);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_horizon_multiple_environment_specific_timeouts()
     {
         $this->app->config->set('queue.default', 'redis');

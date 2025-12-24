@@ -6,19 +6,18 @@ use Enlightn\Enlightn\Analyzers\Performance\EnvCallAnalyzer;
 use Enlightn\Enlightn\Tests\Analyzers\AnalyzerTestCase;
 use Enlightn\Enlightn\Tests\Stubs\DummyStub;
 use Enlightn\Enlightn\Tests\Stubs\EnvStub;
+use PHPUnit\Framework\Attributes\Test;
 
 class EnvCallAnalyzerTest extends AnalyzerTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $this->setupEnvironmentFor(EnvCallAnalyzer::class, $app);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detects_env_function_call()
     {
         $this->setBasePathFrom(EnvStub::class);
@@ -28,9 +27,7 @@ class EnvCallAnalyzerTest extends AnalyzerTestCase
         $this->assertFailedAt(EnvCallAnalyzer::class, $this->getClassStubPath(EnvStub::class), 9);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ignores_errors()
     {
         $this->setBasePathFrom(EnvStub::class);
@@ -46,9 +43,7 @@ class EnvCallAnalyzerTest extends AnalyzerTestCase
         $this->assertPassed(EnvCallAnalyzer::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function passes_with_no_env_call()
     {
         $this->setBasePathFrom(DummyStub::class);
